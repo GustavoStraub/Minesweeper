@@ -21,7 +21,7 @@ import params from './src/params'
 import Field from './src/components/Field'
 
 const App = (props) => {
-  
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -32,8 +32,9 @@ const App = (props) => {
           {params.getRowsAmount()}x{params.getColumnsAmount()}
           </Text>
           <Field />
-          <Field opened/>
-          <Field opened nearMines ={6}/>
+          <Field opened />
+          <Field opened nearMines={6} />
+          <Field mined opened exploded />
         </View>
       </SafeAreaView>
     </>
