@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { Component } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,69 +19,55 @@ import {
 
 import params from './src/params'
 import Field from './src/components/Field'
+import MineField from './src/components/MineField'
+import { createMinedBoard } from './src/components/functions'
 
-const App = (props) => {
+export default class App extends Component {
 
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <View style={styles.container}>
+  constructor(props) {
+    super(props)
+    this.state = this.createState()
+  }
+
+  minesAmount = () => {
+    const cols = params.getColumnsAmount()
+    const rows = params.getRowsAmount()
+    return Math.ceil(cols * rows * params.difficultLevel)
+  }
+
+  createState = () => {
+    const cols = params.getColumnsAmount()
+    const rows = params.getRowsAmount()
+    return {
+      board: createMinedBoard(rows, cols, this.minesAmount())
+    }
+  }
+  render() {
+    return (
+      <>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={styles.container}>
           <Text style={styles.welcome}>Inciando o Mines!</Text>
           <Text style={styles.welcome}>Tamanho da grade:
           {params.getRowsAmount()}x{params.getColumnsAmount()}
           </Text>
-          <Field />
-          <Field opened />
-          <Field opened nearMines={6} />
-          <Field mined opened exploded />
-        </View>
-      </SafeAreaView>
-    </>
-  );
-};
+          <View style={styles.board}>
+            <MineField board={this.state.board} />
+          </View>
+        </SafeAreaView>
+      </>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex: 1,
+    justifyContent: 'flex-end'
   },
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  board: {
+    alignItems: 'center',
+    backgroundColor: '#AAA'
+  }
 });
 
-export default App;
