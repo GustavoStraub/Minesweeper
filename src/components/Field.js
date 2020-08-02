@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import params from '../params'
 import Mine from './Mine'
 import Flag from './Flag'
@@ -21,15 +21,18 @@ export default function Field(props) {
     if (nearMines >= 6) color = '#F221A9'
   }
   return (
-    <View style={styleField}>
-      {!mined && opened && nearMines > 0
-        ?
-        <Text style={[styles.label, { color: color }]}>{nearMines}</Text>
-        :
-        false}
-      {mined && opened ? <Mine /> : false}
-      {flagged && !opened ? <Flag /> : false}
-    </View>
+    <TouchableWithoutFeedback onPress={props.onOpen}
+      onLongPress={props.onSelect}>
+      <View style={styleField}>
+        {!mined && opened && nearMines > 0
+          ?
+          <Text style={[styles.label, { color: color }]}>{nearMines}</Text>
+          :
+          false}
+        {mined && opened ? <Mine /> : false}
+        {flagged && !opened ? <Flag /> : false}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -37,7 +40,8 @@ const styles = StyleSheet.create({
   field: {
     height: params.blockSize,
     width: params.blockSize,
-    borderWidth: params.borderSize
+    borderWidth: params.borderSize,
+    margin: 0.3
   },
   regular: {
     backgroundColor: '#999',

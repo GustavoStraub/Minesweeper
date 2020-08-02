@@ -5,7 +5,9 @@ import Field from './Field'
 export default function MineField(props) {
   const rows = props.board.map((row, r) => {
     const columns = row.map((field, c) => {
-      return <Field {...field} key={c} />
+      return <Field {...field} key={c} 
+      onOpen ={()=> props.onOpenField(r, c)}
+      onSelect={e => props.onSelectField(r,c)}/>
     })
     return <View style={{flexDirection: 'row'}}
      key={r}>{columns}</View>
