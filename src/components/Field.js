@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     height: params.blockSize,
     width: params.blockSize,
     borderWidth: params.borderSize,
-    margin: 0.3
   },
   regular: {
     backgroundColor: '#999',
